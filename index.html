@@ -1,0 +1,75 @@
+<html>
+<head>
+    <title>Express HTML</title>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div style="margin:100px;">
+   <div style="padding: 30px 15px;margin-bottom: 30px;background-color: #eee;">
+        <form style="padding:40px;" action="/search" id="searchForm">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                <label for="inputFirstname">First name</label>
+                <input type="text" name="firstname" class="form-control" id="inputFirstname" placeholder="Firstname">
+                </div>
+                <div class="form-group col-md-6">
+                <label for="inputPassword4">Surname</label>
+                <input type="text" name="surname" class="form-control" id="inputSurname" placeholder="Surname">
+                </div>
+            </div>
+            <button type="submit"  class="btn btn-primary">Search</button>
+        </form>
+    <div   style="padding:40px;" >
+        <div class="row" id="laureates">
+        </div>
+    </div>
+   </div>
+  </div>
+
+  <script>
+      $(document).ready(function(){
+
+            $( "#searchForm" ).submit(function( event ) {
+            console.log("search form");
+            event.preventDefault();
+            const myNode = document.getElementById("laureates");
+            myNode.innerHTML = '';
+            var $form = $( this );
+            var firstname = $form.find( "input[name='firstname']" ).val();
+            var surname = $form.find( "input[name='surname']" ).val();
+            var url ="http://localhost:3100/search";
+
+          var posting = $.post( url, { firstname: firstname,surname :surname } );
+            
+          posting.done(function( data ) {
+                let line1 ='<div class="col-sm-6" style="margin: 20px 0px;"><div class="card"><div class="card-body">';
+                let last ='</div></div></div>';
+                for(let record of data){
+                
+                    let motivation = '<h6 class="card-title">Motivation :'+record.laureates[0].motivation+'</h6>';
+                    let category = '<h6 class="card-title">Category :'+record.category+'</h6>';
+                    let year = '<h6 class="card-title">Year :'+record.year+'</h6>';
+                    let laureatesHeading = '<h6 class="card-title">Laureates :</h6>';
+                    let laureates ='';
+                    for(let laureate of record.laureates){
+                        let laureateDetails ='<p class="card-text"><span style="color:#373e44;"><b>Fullname :</b></span>'+laureate.firstname+" "+ laureate.surname+'<span style="color:#373e44;"><b> , Born City :</b></span> '+ laureate.laureateInfo.bornCity+" "+'<span style="color:#373e44;"><b> , Born Country :</b></span>'+ laureate.laureateInfo.bornCountry+'</p>';
+                        laureates=laureates+laureateDetails;
+                    }
+                    $("#laureates").append(line1+motivation+category+year+laureatesHeading+laureates+last);
+             }
+            //  $("laureates").append(line1+last);
+          });
+        });
+      });
+</script>
+
+</body>
+</html>
+
+
