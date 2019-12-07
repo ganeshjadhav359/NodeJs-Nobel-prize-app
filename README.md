@@ -22,7 +22,7 @@ pkg install node
 
 ### Installing
 
-We first need to install the depedencies for that run the below command.
+We first need to install the depedencies , for that run the below command.
 
 ```
 npm install
