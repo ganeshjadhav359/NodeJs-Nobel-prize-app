@@ -1,6 +1,6 @@
 # NodeJs-Nobel-prize-app
 
-One Paragraph of project description goes here
+NodeJs application to search nobel prize winners by first name last name.
 
 ## Getting Started
 
