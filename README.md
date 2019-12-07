@@ -22,14 +22,11 @@ pkg install node
 
 ### Installing
 
-We need to first install the depedencyies for that run the below command.
+We first need to install the depedencies for that run the below command.
 
 ```
 npm install
 ```
-
-
-End with an example of getting some data out of the system or using it for a little demo
 
 ## Start the app
 
