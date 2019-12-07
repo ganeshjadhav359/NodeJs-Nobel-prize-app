@@ -36,3 +36,7 @@ To run the app execute the below command on the terminal.
 node app.js
 ```
 
+Then hit the below url on chrome to access it.
+```
+http://localhost:3100
+```
